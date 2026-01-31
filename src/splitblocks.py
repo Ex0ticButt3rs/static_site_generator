@@ -12,7 +12,7 @@ class BlockType(Enum):
     ULIST = "unordered_list"
 
 def markdown_to_blocks(markdown):
-    blocks = markdown.split("\gin\n")
+    blocks = markdown.split("\n\n")
     filtered_blocks = []
     for block in blocks:
         if block == "":
