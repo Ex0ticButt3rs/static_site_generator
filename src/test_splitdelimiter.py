@@ -1,9 +1,22 @@
 import unittest
 from textnode import TextNode, TextType, text_node_to_html_node
-from splitdelimiter import split_nodes_delimiter, split_nodes_image, split_nodes_link, extract_markdown_images, extract_markdown_links
+from splitdelimiter import text_to_textnodes, split_nodes_delimiter, split_nodes_image, split_nodes_link, extract_markdown_images, extract_markdown_links
 
 
 class TestSplitDelimiter(unittest.TestCase):
+    def test_delim_bold_and_italic(self):
+        node = TextNode("**bold** and _italic_", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+        new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
+        self.assertEqual(
+            [
+                TextNode("bold", TextType.BOLD),
+                TextNode(" and ", TextType.TEXT),
+                TextNode("italic", TextType.ITALIC),
+            ],
+            new_nodes,
+        )
+    
     def test_no_delimiter_text_unchanged(self):
         node = TextNode("plain text only", TextType.TEXT)
         result = split_nodes_delimiter([node], "**", TextType.BOLD)
