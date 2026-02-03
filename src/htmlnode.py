@@ -9,12 +9,12 @@ class HTMLNode():
         raise NotImplementedError
 
     def props_to_html(self):
-        if self.props == None or self.props == {}:
+        if self.props is None or self.props == {}:
             return ""
-        string = ""
-        for key in self.props:
-            string += (f' {key}="{self.props[key]}"')
-        return string
+        parts = []
+        for key, value in self.props.items():
+            parts.append(f'{key}="{value}"')
+        return " ".join(parts)
 
     def __eq__(self, other):
         return self.tag == other.tag and self.value == other.value and self.children == other.children and self.props == other.props
